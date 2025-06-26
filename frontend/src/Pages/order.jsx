@@ -203,7 +203,7 @@ const Orders = () => {
       }
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/orders/find/${user._id}`, {
+        const res = await axios.get(`https://ecommerce-backend-xkz7.onrender.com/api/orders/find/${user._id}`, {
           headers: { token: `Bearer ${token}` },
         });
 
@@ -212,7 +212,7 @@ const Orders = () => {
             const productsWithDetails = await Promise.all(
               order.products.map(async (orderProduct) => {
                 try {
-                  const productRes = await axios.get(`http://localhost:5000/api/products/find/${orderProduct.productId}`);
+                  const productRes = await axios.get(`https://ecommerce-backend-xkz7.onrender.com/api/products/find/${orderProduct.productId}`);
                   return {
                     ...productRes.data,
                     quantity: orderProduct.quantity || 1,
