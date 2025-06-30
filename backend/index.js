@@ -14,7 +14,7 @@ const razorpayRoute = require('./routes/razorpay'); // ✅ Add this line
 
 // ✅ Enable CORS middleware BEFORE your routes
 app.use(cors({
-  origin: "http://localhost:5173", // or "*" to allow all origins temporarily
+  origin: "*", // or "*" to allow all origins temporarily
   credentials: true
 }));
 
