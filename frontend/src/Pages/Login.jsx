@@ -3,7 +3,7 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom"; // ✅ Added for navigation
+import { Link } from "react-router-dom"; 
 
 const Container = styled.div`
   width: 100vw;
@@ -103,7 +103,6 @@ const Login = () => {
             LOGIN
           </Button>
           {error && <Error>Something went wrong...</Error>}
-          <StyledLink to="#">DO NOT YOU REMEMBER THE PASSWORD?</StyledLink>
           <StyledLink to="/register">CREATE A NEW ACCOUNT</StyledLink>
         </Form>
       </Wrapper>

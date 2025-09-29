@@ -8,7 +8,6 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
 
-// Styled heading
 const SectionTitle = styled.h2`
   font-size: 32px;
   font-weight: 600;
@@ -18,11 +17,13 @@ const SectionTitle = styled.h2`
 `;
 
 function Home() {
+
   return (
-    <div>
-      <Announcement />
+     <div>
+       <Announcement />
       <Navbar />
       <Slider />
+
       <Categories />
       
       <SectionTitle>Trending</SectionTitle>

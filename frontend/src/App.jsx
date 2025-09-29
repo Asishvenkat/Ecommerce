@@ -1,4 +1,4 @@
-// import { use } from 'react';
+
 import './App.css'
 import Cart from './Pages/Cart';
 import Home from './Pages/Home';
@@ -9,6 +9,9 @@ import Register from './Pages/Register';
 import Wishlist from './Pages/wishlist';
 import Orders from './Pages/order';
 import ScrollToTop from "./components/Scroll";
+import Test from "./Pages/test"
+import Parent from "./Pages/par"
+import Child from './Pages/child';
 
 import {
   BrowserRouter as Router,
@@ -32,6 +35,9 @@ function App() {
         <Route path="/login" element={user ? <Home /> : <Login />} />
         <Route path="/wishlist" element={<Wishlist />} /> 
        <Route path="/orders" element={<Orders />} />
+       <Route path="/test" element={<Test/>}/>
+      <Route path="/props" element={<Parent/>}/>
+       {/* <Route path="/props" element={<Child/>}/> */}
       </Routes>
     </Router>
   );

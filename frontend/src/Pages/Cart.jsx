@@ -130,82 +130,82 @@ const Cart = () => {
     document.body.appendChild(script);
   }, []);
 
-  const proceedToPayment = async () => {
-    try {
-      const orderUrl = "http://localhost:5000/api/payment/order";
-      const { data } = await axios.post(orderUrl, {
-        amount: cart.total * 100,
-        currency: "INR",
-      });
+    const proceedToPayment = async () => {
+      try {
+        const orderUrl = "http://localhost:5000/api/payment/order";
+        const { data } = await axios.post(orderUrl, {
+          amount: cart.total * 100,
+          currency: "INR",
+        });
 
-      const options = {
-        key: "rzp_test_7iWVVTng1uWfu6",
-        amount: data.amount,
-        currency: data.currency,
-        name: "E-Commerce Store",
-        description: "Order Payment",
-        order_id: data.id,
-        handler: async function (response) {
-          try {
-            const res = await axios.post("http://localhost:5000/api/payment/order/validate", {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            });
+        const options = {
+          key: "rzp_test_7iWVVTng1uWfu6",
+          amount: data.amount,
+          currency: data.currency,
+          name: "E-Commerce Store",
+          description: "Order Payment",
+          order_id: data.id,
+          handler: async function (response) {
+            try {
+              const res = await axios.post("http://localhost:5000/api/payment/order/validate", {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
 
-            if (res.data.msg === "success") {
-              try {
-                const orderProducts = cart.products.map(product => ({
-                  productId: product._id,
-                  quantity: product.quantity
-                }));
+              if (res.data.msg === "success") {
+                try {
+                  const orderProducts = cart.products.map(product => ({
+                    productId: product._id,
+                    quantity: product.quantity
+                  }));
 
-                const orderData = {
-                  userId: currentUser._id,
-                  products: orderProducts,
-                  amount: cart.total,
-                  address: address,
-                  status: "pending",
-                  paymentId: response.razorpay_payment_id,
-                  orderId: response.razorpay_order_id,
-                };
+                  const orderData = {
+                    userId: currentUser._id,
+                    products: orderProducts,
+                    amount: cart.total,
+                    address: address,
+                    status: "pending",
+                    paymentId: response.razorpay_payment_id,
+                    orderId: response.razorpay_order_id,
+                  };
 
-                await axios.post("http://localhost:5000/api/orders", orderData, {
-                  headers: {
-                    "token": currentUser.accessToken,
-                    "Content-Type": "application/json"
-                  }
-                });
+                  await axios.post("http://localhost:5000/api/orders", orderData, {
+                    headers: {
+                      "token": currentUser.accessToken,
+                      "Content-Type": "application/json"
+                    }
+                  });
 
-                
-                dispatch(clearCart());
-                navigate("/", { replace: true });
-                
-              } catch (orderError) {
-                console.error("Order save failed:", orderError);
-                alert("Order placement failed, but payment was successful. Please contact support.");
+                  
+                  dispatch(clearCart());
+                  navigate("/", { replace: true });
+                  
+                } catch (orderError) {
+                  console.error("Order save failed:", orderError);
+                  alert("Order placement failed, but payment was successful. Please contact support.");
+                }
+              } else {
+                alert("Payment verification failed! Please contact support.");
               }
-            } else {
-              alert("Payment verification failed! Please contact support.");
+            } catch (validationError) {
+              alert("Payment validation failed! Please contact support.");
             }
-          } catch (validationError) {
-            alert("Payment validation failed! Please contact support.");
-          }
-        },
-        prefill: {
-          name: address.name,
-          email: currentUser?.email || "",
-          contact: address.phone,
-        },
-        theme: { color: "#000000" },
-      };
+          },
+          prefill: {
+            name: address.name,
+            email: currentUser?.email || "",
+            contact: address.phone,
+          },
+          theme: { color: "#000000" },
+        };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err) {
-      alert("Payment initialization failed. Please try again.");
-    }
-  };
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } catch (err) {
+        alert("Payment initialization failed. Please try again.");
+      }
+    };
 
   const handleCheckout = () => {
     if (!isLoggedIn) {

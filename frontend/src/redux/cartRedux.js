@@ -93,27 +93,6 @@ const cartSlice = createSlice({
             state.total = 0;
         },
 
-        // NEW: Sync cart with backend data
-        syncCart: (state, action) => {
-            const backendProducts = action.payload.products || [];
-            
-            // Calculate totals from backend data
-            const quantity = backendProducts.reduce((sum, product) => sum + product.quantity, 0);
-            const total = backendProducts.reduce((sum, product) => sum + (product.price * product.quantity), 0);
-            
-            state.products = backendProducts.map(product => ({
-                _id: product.productId,
-                productId: product.productId,
-                quantity: product.quantity,
-                color: product.color,
-                size: product.size,
-                price: product.price,
-                title: product.title,
-                img: product.img
-            }));
-            state.quantity = quantity;
-            state.total = total;
-        }
     },
 });
 
