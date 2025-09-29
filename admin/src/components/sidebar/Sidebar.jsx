@@ -28,14 +28,6 @@ export default function Sidebar() {
                 Home
               </li>
             </Link>
-            {/* <li className="sidebarListItem">
-              <TimelineIcon className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUpIcon className="sidebarIcon" />
-              Sales
-            </li> */}
           </ul>
         </div>
 
@@ -66,52 +58,9 @@ export default function Sidebar() {
                 Transactions
               </li>
             </Link>
-            {/* <li className="sidebarListItem">
-              <AttachMoneyIcon className="sidebarIcon" />
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-              <BarChartIcon className="sidebarIcon" />
-              Reports
-            </li> */}
           </ul>
         </div>
-
-        {/* <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutlineIcon className="sidebarIcon" />
-              Mail
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeedIcon className="sidebarIcon" />
-              Feedback
-            </li>
-            <li className="sidebarListItem">
-              <ChatBubbleOutlineIcon className="sidebarIcon" />
-              Messages
-            </li>
-          </ul>
-        </div> */}
-
-        {/* <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <WorkOutlineIcon className="sidebarIcon" />
-              Manage
-            </li>
-            <li className="sidebarListItem">
-              <TimelineIcon className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <ReportIcon className="sidebarIcon" />
-              Reports
-            </li>
-          </ul>
-        </div> */}
+      
       </div> 
     </div>
   );

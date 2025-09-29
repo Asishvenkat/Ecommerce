@@ -11,18 +11,16 @@ export default function NewProduct() {
   const [size, setSize] = useState([]);
   const [color, setColor] = useState([]);
 
-  // Get current user from Redux
+  
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  // Guest mode check function
   const isGuestMode = () => {
     try {
-      // If user is logged in as admin, they are NOT in guest mode
+    
       if (currentUser && currentUser.isAdmin) {
         return false;
       }
-      
-      // Check if there's a guest user in localStorage
+    
       const guestUser = localStorage.getItem('guestUser');
       return guestUser !== null;
     } catch {

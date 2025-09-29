@@ -30,18 +30,17 @@ export default function Product() {
   
   const { isFetching } = useSelector((state) => state.product);
 
-  // Get current user from Redux
   const currentUser = useSelector((state) => state.user.currentUser);
   
-  // Check if user is in guest mode
+ 
   const isGuestMode = () => {
     try {
-      // If user is logged in as admin, they are NOT in guest mode
+     
       if (currentUser && currentUser.isAdmin) {
         return false;
       }
       
-      // Check if there's a guest user in localStorage
+    
       const guestUser = localStorage.getItem('guestUser');
       return guestUser !== null;
     } catch {
@@ -67,7 +66,6 @@ export default function Product() {
     []
   );
 
-  // Initialize form data with current product data
   useEffect(() => {
     if (product) {
       setInputs({
@@ -102,7 +100,7 @@ export default function Product() {
     getStats();
   }, [productId, MONTHS]);
 
-  // Handle input changes
+ 
   const handleChange = (e) => {
     setInputs((prev) => ({
       ...prev,
@@ -114,11 +112,10 @@ export default function Product() {
   const handleSize = (e) => setSize(e.target.value.split(","));
   const handleColor = (e) => setColor(e.target.value.split(","));
 
-  // Handle update
+
   const handleUpdate = async (e) => {
     e.preventDefault();
-    
-    // Check if in guest mode and prevent update
+   
     if (isGuestMode()) {
       alert("⚠️ Guest Mode: Changes cannot be saved in guest mode. This is a demo version only.");
       return;
@@ -127,12 +124,12 @@ export default function Product() {
     dispatch(updateProductStart());
 
     try {
-      let imageUrl = product.img; // Keep existing image by default
+      let imageUrl = product.img; 
 
-      // If a new file is selected, upload it
+      
       if (file) {
         const uploadedFile = await storage.createFile(
-          "684d5b6500217dc48597", // Your Bucket ID
+          "684d5b6500217dc48597", 
           ID.unique(),
           file
         );
@@ -140,7 +137,7 @@ export default function Product() {
         imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/684d5b6500217dc48597/files/${uploadedFile.$id}/view?project=684d5add003ce6bd9cb0`;
       }
 
-      // Construct the updated product object
+      
       const updatedProductData = {
         ...inputs,
         img: imageUrl,
@@ -149,10 +146,10 @@ export default function Product() {
         color: color,
       };
 
-      // Send update request to backend
+      
       const res = await userRequest.put(`/products/${productId}`, updatedProductData);
       
-      // Dispatch success action
+      
       dispatch(updateProductSuccess({ 
         id: productId, 
         product: res.data 
@@ -181,7 +178,6 @@ export default function Product() {
         </Link>
       </div>
       
-      {/* Guest Mode Warning Banner */}
       {isGuestMode() && (
         <div style={{
           backgroundColor: '#fff3cd',

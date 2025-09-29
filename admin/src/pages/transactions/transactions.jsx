@@ -101,7 +101,7 @@ export default function AllTransactions() {
         status: newStatus,
       });
 
-      // Update UI
+    
       setOrders((prev) =>
         prev.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
