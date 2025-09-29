@@ -7,6 +7,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { format } from "date-fns";
+import { userRequest } from "../requestMethods";
 
 const Container = styled.div``;
 
@@ -196,23 +197,22 @@ const Orders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      if (!user?._id || !token) {
+      if (!user?._id) {
         setError("Please login to view your orders");
         setLoading(false);
         return;
       }
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/orders/find/${user._id}`, {
-          headers: { token: `Bearer ${token}` },
-        });
+        // Fetch orders for current user
+        const res = await userRequest.get(`orders/find/${user._id}`);
 
         const ordersWithDetails = await Promise.all(
           res.data.map(async (order) => {
             const productsWithDetails = await Promise.all(
               order.products.map(async (orderProduct) => {
                 try {
-                  const productRes = await axios.get(`http://localhost:5000/api/products/find/${orderProduct.productId}`);
+                  const productRes = await userRequest.get(`products/find/${orderProduct.productId}`);
                   return {
                     ...productRes.data,
                     quantity: orderProduct.quantity || 1,
@@ -236,7 +236,9 @@ const Orders = () => {
           })
         );
 
-        const sorted = ordersWithDetails.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const sorted = ordersWithDetails.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
         setOrders(sorted);
       } catch (err) {
         setError("Failed to load orders. Try again later.");
@@ -246,7 +248,8 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, [user, token]);
+  }, [user]);
+
 
   const handleShopNow = () => window.location.href = "/";
   const calculateProductPrice = (product) => (Number(product.price) || 0) * (Number(product.quantity) || 1);

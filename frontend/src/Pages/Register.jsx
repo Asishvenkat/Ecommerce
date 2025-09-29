@@ -3,6 +3,7 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
   width: 100vw;
@@ -73,15 +74,15 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", inputs);
+      const res = await publicRequest.post("auth/register", inputs);
       console.log("Registered:", res.data);
-    //  alert("Registration successful!");
       navigate("/"); 
     } catch (err) {
       console.error("Registration error:", err.response?.data || err.message);
       alert("Registration failed. Try again.");
     }
   };
+
 
   return (
     <Container>
