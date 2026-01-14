@@ -3,6 +3,8 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/userRedux";
 import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
@@ -65,7 +67,8 @@ const Register = () => {
     password: "",
   });
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -76,6 +79,11 @@ const Register = () => {
     try {
       const res = await publicRequest.post("auth/register", inputs);
       console.log("Registered:", res.data);
+      
+      // Store user data in Redux
+      dispatch(loginSuccess(res.data));
+      
+      // Navigate to home
       navigate("/"); 
     } catch (err) {
       console.error("Registration error:", err.response?.data || err.message);
@@ -89,12 +97,9 @@ const Register = () => {
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" name="name" onChange={handleChange} />
-          <Input placeholder="last name" name="lastname" onChange={handleChange} />
           <Input placeholder="username" name="username" onChange={handleChange} />
           <Input placeholder="email" name="email" onChange={handleChange} />
           <Input type="password" placeholder="password" name="password" onChange={handleChange} />
-          <Input type="password" placeholder="confirm password" name="confirmPassword" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>

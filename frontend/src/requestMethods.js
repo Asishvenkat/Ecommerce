@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/";
+const BASE_URL = "https://ecommerce-backend-60wi.onrender.com/api/";
 
 // Safe token extraction
 let TOKEN = null;

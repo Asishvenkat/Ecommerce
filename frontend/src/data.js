@@ -1,7 +1,7 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "https://th.bing.com/th/id/OIP.TAY9zAHIpkXXMJEUaHrQogAAAA?rs=1&pid=ImgDetMain",
+      img: "https://i2-prod.mirror.co.uk/incoming/article30604725.ece/ALTERNATES/s1200c/0_holly-willoughby-sale.jpg",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",

@@ -103,6 +103,7 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const wishlistItems = useSelector(state => state.wishlist.products);
+  const currentUser = useSelector(state => state.user.currentUser);
   const isInWishlist = wishlistItems.some(item => item._id === product._id);
 
   useEffect(() => {
@@ -129,17 +130,25 @@ const Product = () => {
 
 
   const handleAddToCart = () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     dispatch(addProduct({
       ...product,
       quantity: quantity,
       size: size,
       color: color
     }));
-    
-  
   };
 
   const handleWishlistToggle = () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     if (isInWishlist) {
       dispatch(removeFromWishlist(product._id));
     } else {
